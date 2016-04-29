@@ -1,0 +1,21 @@
+{
+  "name": "nvd3_components",
+  "authors": [
+    "Margaret Morgan <mmogan@datto.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "domino": "http://github-server.datto.lan/UI-Components/domino.git#master"
+  }
+}

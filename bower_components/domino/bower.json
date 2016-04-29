@@ -1,0 +1,24 @@
+{
+  "name": "domino",
+  "version": "0.0.1",
+  "homepage": "datto.com/brand",
+  "authors": [
+    "Logan Bernard <lbernard@datto.com>",
+    "Mike McNasby <mmcnasby@datto.com>"
+  ],
+  "description": "Datto CSS Library",
+  "main": [
+    "./dist/domino.min.css",
+    "./dist/domino.scss"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "*",
+    "!dist/*",
+    "!dist/icon-font/*"
+  ],
+  "devDependencies": {
+    "bootstrap-sass": "^3.3.6",
+    "gridlex-custom": "https://github.com/mcnasby/gridlex.git#master"
+  }
+}

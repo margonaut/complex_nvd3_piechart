@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html style="font-size: 20px;">
+  <head>
+    <meta charset="utf-8">
+    <title>Pie Chart Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/nvd3-elements/nvd3-pie.html">
+    <link rel="stylesheet" href="../bower_components/domino/dist/domino.min.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body class="dui-bg-gray-5">
+    <div class="dui-padding-lg">
+
+    <h1 class="dui-margin-bottom-lg dui-margin-collapse-top dui-shadow-bottom dui-padding-bottom-sm">
+      NVD3 Pie Chart Test
+    </h1>
+
+    <div id="chart" style="height: 400px;">
+      <svg id="pie1"></svg>
+    </div>
+    <button id="back" style="display: none;" type="button" name="button">Back</button>
+    <script>
+    // PLAIN NVD3 CHART
+    // Global variables
+    var pieChart;
+    var chartSvgWithData;
+
+    // ADD CHART
+    nv.addGraph(function() {
+      pieChart = nv.models.pieChart()
+          .x(function(d) { return d.label })
+          .y(function(d) { return d.value })
+          .showLabels(true);
+      var data = startingData();
+
+      setOriginalColors();
+
+      chartSvgWithData = d3.select('#chart svg')
+        .datum(data);
+      chartSvgWithData.transition().duration(500).call(pieChart);
+      return pieChart;
+    });
+
+    // LISTEN FOR CHART CLICKS
+    $("svg#pie1").click(function(e){
+      var slice = d3.select(e.target.parentNode);
+      if(chartSvgWithData.classed("second-layer")) {
+        setOriginalColors();
+        update(startingData());
+        $("#back").hide();
+        chartSvgWithData.classed("second-layer", false);
+      } else {
+        var newData = slice.data()[0].data.breakdown;
+        chartSvgWithData.classed("second-layer", true);
+        $("#back").show();
+        var numSlices = chartSvgWithData.data()[0].length;
+        var baseColor = slice.style("fill");
+        setNewColors(numSlices, baseColor);
+        update(newData);
+      }
+    });
+
+    // LISTEN FOR BACK BUTTON CLICKS
+    $('#back').click(function(){
+      setOriginalColors();
+      update(startingData(), "backbutton");
+    });
+
+    // DATA UPDATE FUNCTION
+
+    function update(data) {
+      chartSvgWithData.datum(data).transition().duration(500).call(pieChart);
+      nv.utils.windowResize(pieChart.update);
+    }
+
+    // COLOR FUNCTIONS
+    function setNewColors(numSlices, baseColor) {
+      var colors = d3.scale.linear()
+                    .domain([0,numSlices])
+                    .interpolate(d3.interpolateHcl)
+                    .range([d3.rgb(baseColor).brighter(.7), d3.rgb(baseColor).darker(.7)]);
+      pieChart.color(function(d, i) {
+        return colors(i)
+      })
+    }
+
+    function setOriginalColors() {
+      pieChart.color(['#199ED9', '#B0D156', '#54C0C0']);
+    }
+
+function startingData() {
+  return [{
+    "label": "Thing One",
+    "value": 50,
+    "breakdown": [{
+      "label": "DN 1000",
+      "value": 30
+      },
+      {
+      "label": "DN 2000",
+      "value": 50
+      },
+      {
+      "label": "DN 3000",
+      "value": 20
+      }]
+  }, {
+    "label": "Thing Two",
+    "value": 10,
+    "breakdown": [{
+      "label": "SB 1000",
+      "value": 20
+      },
+      {
+      "label": "SB 2000",
+      "value": 60
+      },
+      {
+      "label": "SB 3000",
+      "value": 20
+      }]
+  }, {
+    "label": "Thing Three",
+    "value": 10,
+    "breakdown": [{
+      "label": "AT 1000",
+      "value": 40
+      },
+      {
+      "label": "AT 2000",
+      "value": 15
+      },
+      {
+      "label": "AT 3000",
+      "value": 15
+      },
+      {
+      "label": "AT 4000",
+      "value": 10
+    },
+      {
+      "label": "AT 5000",
+      "value": 20
+      }]
+  }]
+}
+  </script>
+</div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html style="font-size: 20px;">
+  <head>
+    <meta charset="utf-8">
+    <title>Pie Chart Demo</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/nvd3-elements/nvd3-pie.html">
+    <link rel="stylesheet" href="../bower_components/domino/dist/domino.min.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body class="dui-bg-gray-5">
+    <div class="dui-padding-lg">
+
+    <h1 class="dui-margin-bottom-lg dui-margin-collapse-top dui-shadow-bottom dui-padding-bottom-sm">
+      NVD3 Pie Chart Component Test
+    </h1>
+    <div class="dui-card dui-margin-top-lg">
+      <nvd3-pie id="pie1" height="400" auto-resize show-legend show-labels grow-on-hover></nvd3-pie>
+      <nvd3-pie id="pie2" height="400" auto-resize show-legend show-labels grow-on-hover></nvd3-pie>
+      <p>
+        test
+      </p>
+
+    </div>
+
+
+    // var newData = slice.__data__.data.breakdown
+
+    <script>
+    // load top level data
+    // on click, associate new data with the chart
+    // and unhide a back button
+    // d3.selectAll
+
+    var chart;
+    var data;
+
+    var chartData = [{
+      "label": "One",
+      "value": 50,
+      "breakdown": [{
+        "label": "thing",
+        "value": 70
+        },
+        {
+        "label": "thing2",
+        "value": 30
+        }]
+    }, {
+      "label": "Two",
+      "value": 50,
+      "breakdown": [{
+        "label": "thing",
+        "value": 70
+        },
+        {
+        "label": "thing2",
+        "value": 30
+        }]
+    }];
+
+    var pieChart = document.querySelector('nvd3-pie#pie1');
+    var pieChart2 = document.querySelector('nvd3-pie#pie2');
+    pieChart.data = chartData;
+    // pieChart2.data = chartData[0]["breakdown"]
+
+    $("svg.nvd3-pie").click(function(e){
+      var slice = e.target.parentNode;
+      var newData = slice.__data__.data.breakdown
+      updateData(newData);
+    });
+
+    function updateData(newData) {
+      var pieChart2 = document.querySelector('nvd3-pie#pie2');
+      pieChart2.data = chartData[0]["breakdown"]
+      debugger;
+      // pieChart2.data = newData;
+      // pieChart.data = newData;
+      // d3.select('nvd3-pie').datum(newData)
+      // .transition()
+      // .duration(500)
+      // .call(function(e){
+      //   debugger;
+      // });
+    }
+//     $(document).ready(function(){
+//
+//
+// });
+
+  </script>
+</div>
+  </body>
+</html> -->

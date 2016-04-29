@@ -1,0 +1,33 @@
+{
+  "name": "domino",
+  "homepage": "datto.com/brand",
+  "authors": [
+    "Logan Bernard <lbernard@datto.com>",
+    "Mike McNasby <mmcnasby@datto.com>"
+  ],
+  "description": "Datto CSS Library",
+  "main": [
+    "./dist/domino.min.css",
+    "./dist/domino.scss"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "*",
+    "!dist/*",
+    "!dist/icon-font/*"
+  ],
+  "devDependencies": {
+    "bootstrap-sass": "^3.3.6",
+    "gridlex-custom": "https://github.com/mcnasby/gridlex.git#master"
+  },
+  "_release": "560b92be33",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "560b92be33228eeb1a2e0967a3185673ce4dabb6"
+  },
+  "_source": "http://github-server.datto.lan/UI-Components/domino.git",
+  "_target": "master",
+  "_originalSource": "http://github-server.datto.lan/UI-Components/domino.git",
+  "_direct": true
+}
